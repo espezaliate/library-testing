@@ -1,0 +1,21 @@
+div {
+    font-size: large;
+    display: flex;
+    justify-content: center;
+}
+    form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        & > .ant-row {
+            flex-direction: column;
+        }
+
+            .ant-form-item-label {
+                text-align: center;
+            }
+
+    }
+
