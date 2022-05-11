@@ -3,6 +3,15 @@ import "../../stylesheet/ShipmentPickupForm.scss";
 import { Form, Input, Button } from "antd";
 
 const ShipmentPickupForm = () => {
+  const isAfterToday = (inputDate: Date) => {
+    const today = new Date();
+    return (
+      new Date(inputDate).getDate() > today.getDate() &&
+      new Date(inputDate).getMonth() >= today.getMonth() &&
+      new Date(inputDate).getFullYear() >= today.getFullYear()
+    );
+  };
+
   const onFinish = (values: any) => {
     console.log("Success:", values);
   };
@@ -52,12 +61,8 @@ const ShipmentPickupForm = () => {
           rules={[
             { required: true, message: "Please input the pickup date!" },
             ({ getFieldValue }) => ({
-              validator(_, value) {
-                if (
-                  new Date(value).getDate() > new Date().getDate() &&
-                  new Date(value).getMonth() >= new Date().getMonth() &&
-                  new Date(value).getFullYear() >= new Date().getFullYear()
-                ) {
+              validator(_, inputDate) {
+                if (isAfterToday(inputDate)) {
                   return Promise.resolve();
                 }
                 return Promise.reject(new Error("The date is too soon!"));
